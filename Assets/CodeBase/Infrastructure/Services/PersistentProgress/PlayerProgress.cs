@@ -1,5 +1,8 @@
-﻿namespace CodeBase.Infrastructure.Services.PersistentProgress
+﻿using System;
+
+namespace CodeBase.Infrastructure.Services.PersistentProgress
 {
+    [Serializable]
     public class PlayerProgress
     {
         

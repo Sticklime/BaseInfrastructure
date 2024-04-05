@@ -14,14 +14,10 @@ namespace CodeBase.Infrastructure.Services.SaveLoad
             _progressService = progressService;
         }
 
-        public void SaveProgress()
-        {
+        public void SaveProgress() => 
             PlayerPrefs.SetString(ProgressKey, _progressService.Progress.ToJson());
-        }
 
-        public PlayerProgress LoadProgress()
-        {
-            return PlayerPrefs.GetString(ProgressKey)?.ToDeserialized<PlayerProgress>();
-        }
+        public PlayerProgress LoadProgress() => 
+            PlayerPrefs.GetString(ProgressKey)?.ToDeserialized<PlayerProgress>();
     }
 }

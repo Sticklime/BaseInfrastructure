@@ -1,4 +1,6 @@
-﻿namespace CodeBase.Infrastructure.States.CodeBase.Services
+﻿using CodeBase.Infrastructure.Services;
+
+namespace CodeBase.Infrastructure.States.CodeBase.Services
 {
     public class AllServices
     {
