@@ -21,8 +21,7 @@ namespace CodeBase.Infrastructure.Services.AdServices
 
         public void GameAnalytic()
         {
-            GameAnalytics.GetRemoteConfigsValueAsString(_clicker, _defaultValue);
-            
+            GameAnalytics.GetRemoteConfigsValueAsString(_clicker, _defaultValue);   
         }
     }
 

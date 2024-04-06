@@ -1,14 +1,15 @@
 ﻿using System.Threading.Tasks;
 using Agava.YandexGames;
 using System;
+using System.ComponentModel;
+using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure.Services.SDK
 {
     public interface ISdkServices : IService
     {
-        Task InitSDK();
-        Task Save();
-        Task<string> LoadProgress();
+        UniTask InitSDK();
+  
     }
 
     public interface ISdkGameReadyServices : ISdkServices
@@ -16,27 +17,43 @@ namespace CodeBase.Infrastructure.Services.SDK
         public void CallGameReady();
     }
 
-    public class YandexSdk : ISdkGameReadyServices
+    public interface IRawData
     {
-        private string _json = "";
+        UniTask Save(string jsonData);
+        UniTask<string> FetchData();
+    }
 
-        public async Task InitSDK() => 
-            await Task.Run(() => YandexGamesSdk.Initialize());
-
-        public async Task Save() => 
-            await Task.Run(() => PlayerAccount.SetCloudSaveData(_json));
-
-        public async Task<string> LoadProgress()
+    public class YandexSdk : ISdkGameReadyServices, IRawData
+    {
+        public async UniTask InitSDK() => 
+            await YandexGamesSdk.Initialize().ToUniTask();
+        
+        public async UniTask Save(string jsonData)
         {
-            await Task.Run(() =>  PlayerAccount.GetCloudSaveData(GetJson));
-            
-            return _json;
+            bool isLoaded = false;
+
+            PlayerAccount.SetCloudSaveData(jsonData, () => isLoaded = true);
+
+            await UniTask.WaitUntil(() => isLoaded);
         }
 
-        public void CallGameReady() => 
-            YandexGamesSdk.GameReady();
+        public async UniTask<string> FetchData()
+        {
+            bool isLoaded = false;
+            string jsonData = "";
 
-        private void GetJson(string json) =>
-            _json = json;
+            PlayerAccount.GetCloudSaveData(awaitData =>
+            {
+                isLoaded = true;
+                jsonData = awaitData;
+            });
+
+            await UniTask.WaitUntil(() => isLoaded);
+
+            return jsonData;
+        }
+
+        public void CallGameReady() =>
+            YandexGamesSdk.GameReady();
     }
 }

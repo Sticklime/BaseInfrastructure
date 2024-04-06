@@ -32,14 +32,11 @@ namespace CodeBase.Infrastructure.State
         {
         }
 
-        private void LoadProgressOrInitNew()
+        private async void LoadProgressOrInitNew()
         {
-            if (Application.isEditor)
-                _allServices.Single<IPersistentProgressService>().Progress = _saveLoad.LoadProgress() ?? NewProgress();
-            else
-            //    _allServices.Single<IPersistentProgressService>().Progress = _sdkServices.LoadProgress() ?? NewProgress();
-            
-            if (_sdkServices is ISdkGameReadyServices gameReadyServices) 
+            _allServices.Single<IPersistentProgressService>().Progress = await _saveLoad.LoadProgress() ?? NewProgress();
+
+            if (_sdkServices is ISdkGameReadyServices gameReadyServices)
                 gameReadyServices.CallGameReady();
         }
 

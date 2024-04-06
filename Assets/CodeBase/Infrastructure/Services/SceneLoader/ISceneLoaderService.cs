@@ -1,9 +1,10 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure.Services.SceneLoader
 {
     public interface ISceneLoader : IService
     {
-        void Load(string name, Action onLoaded = null);
+        UniTask LoadScene(string name);
     }
 }

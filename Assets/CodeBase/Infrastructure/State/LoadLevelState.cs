@@ -1,5 +1,4 @@
 ﻿using CodeBase.Infrastructure.Services.SceneLoader;
-using CodeBase.Infrastructure.Services.SDK;
 using CodeBase.Infrastructure.States.CodeBase.Services;
 using UnityEngine;
 
@@ -9,18 +8,20 @@ namespace CodeBase.Infrastructure.State
     {
         private readonly GameStateMachine _gameStateMachine;
         private readonly AllServices _services;
-    
+
         private Camera _camera;
 
         public LoadLevelState(GameStateMachine gameStateMachine, AllServices services)
         {
             _gameStateMachine = gameStateMachine;
-            _services = services;  
+            _services = services;
         }
 
-        public void Enter()
+        public async void Enter()
         {
-            _services.Single<ISceneLoader>().Load("MainScene", InitLevel);
+            await _services.Single<ISceneLoader>().LoadScene("MainScene");
+
+            InitLevel();
         }
 
         public void Exit()

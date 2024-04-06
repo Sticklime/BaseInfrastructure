@@ -12,7 +12,8 @@ namespace CodeBase.Infrastructure.State
         private readonly AllServices _allServices;
         private readonly ICoroutineRunner _coroutineRunner;
 
-        public BootstrapState(GameStateMachine gameStateMachine, ICoroutineRunner coroutineRunner, AllServices allServices)
+        public BootstrapState(GameStateMachine gameStateMachine, ICoroutineRunner coroutineRunner,
+            AllServices allServices)
         {
             _gameStateMachine = gameStateMachine;
             _allServices = allServices;
@@ -21,14 +22,16 @@ namespace CodeBase.Infrastructure.State
 
         public async void Enter()
         {
-            _allServices.RegisterSingle<ISdkServices>( new YandexSdk());
+            var yandexSdk = new YandexSdk();
+
+            _allServices.RegisterSingle<ISdkServices>(yandexSdk);
             _allServices.RegisterSingle<ISceneLoader>(new SceneLoaderServices(_coroutineRunner));
             _allServices.RegisterSingle<IPersistentProgressService>(new PersistentProgress());
-            _allServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(_allServices.Single<IPersistentProgressService>()));
-            _allServices.RegisterSingle<ISceneLoader>(new SceneLoaderServices(_coroutineRunner));
-            
+            _allServices.RegisterSingle<ISaveLoadService>(new SaveLoadService(yandexSdk));
+            _allServices.RegisterSingle(new SaveLimit(_coroutineRunner, _allServices.Single<ISaveLoadService>()));
+
             await _allServices.Single<ISdkServices>().InitSDK();
-            
+
             _gameStateMachine.Enter<LoadProgressState>();
         }
 

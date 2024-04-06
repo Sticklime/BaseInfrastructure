@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,29 +12,15 @@ namespace CodeBase.Infrastructure.Services.SceneLoader
         public SceneLoaderServices(ICoroutineRunner coroutineRunner) =>
             _coroutineRunner = coroutineRunner;
 
-        public void Load(string name, Action onLoaded = null)
-        {
-            _coroutineRunner.StartCoroutine(LoadScene(name, onLoaded));
-        }
-
-        private IEnumerator LoadScene(string nextScene, Action onLoaded = null)
+        public async UniTask LoadScene(string nextScene)
         {
             if (SceneManager.GetActiveScene().name == nextScene)
-            {
-                onLoaded?.Invoke();
-                yield break;
-            }
+                throw new ArgumentException("Scene is loaded");
 
             AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(nextScene);
 
 
-            while (!waitNextScene.isDone)
-            {
-                yield return null;
-            }
-
-            onLoaded?.Invoke();
+            await waitNextScene;
         }
     }
-    
 }
