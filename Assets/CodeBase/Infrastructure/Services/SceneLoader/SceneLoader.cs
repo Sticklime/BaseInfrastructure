@@ -18,8 +18,7 @@ namespace CodeBase.Infrastructure.Services.SceneLoader
                 throw new ArgumentException("Scene is loaded");
 
             AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(nextScene);
-
-
+            
             await waitNextScene;
         }
     }

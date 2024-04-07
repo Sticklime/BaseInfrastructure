@@ -1,16 +1,19 @@
+using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.State;
-using CodeBase.Infrastructure.States.CodeBase.Services;
 using UnityEngine;
 
-public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
+namespace CodeBase.Infrastructure
 {
-    private GameStateMachine _gameStateMachine;
-
-    private void Awake()
+    public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
     {
-        _gameStateMachine = new GameStateMachine(new AllServices(), this);
+        private GameStateMachine _gameStateMachine;
 
-        _gameStateMachine.Enter<BootstrapState>();
+        private void Awake()
+        {
+            _gameStateMachine = new GameStateMachine(new AllServices(), this);
+
+            _gameStateMachine.Enter<BootstrapState>();
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeBase.Infrastructure.States.CodeBase.Services;
+using CodeBase.Infrastructure.Services;
 
 namespace CodeBase.Infrastructure.State
 {

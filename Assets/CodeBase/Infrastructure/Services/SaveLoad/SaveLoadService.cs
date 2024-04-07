@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using CodeBase.Data;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.Services.SDK;
 using Cysharp.Threading.Tasks;

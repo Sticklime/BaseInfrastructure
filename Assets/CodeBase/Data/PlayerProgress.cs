@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeBase.Infrastructure.Services.PersistentProgress
+namespace CodeBase.Data
 {
     [Serializable]
     public class PlayerProgress

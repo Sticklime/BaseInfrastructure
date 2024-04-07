@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Services.PersistentProgress;
+﻿using CodeBase.Data;
+using CodeBase.Infrastructure.Services.PersistentProgress;
 using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure.Services.SaveLoad

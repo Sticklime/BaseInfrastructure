@@ -1,5 +1,5 @@
-﻿using CodeBase.Infrastructure.Services.SceneLoader;
-using CodeBase.Infrastructure.States.CodeBase.Services;
+﻿using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.SceneLoader;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.State

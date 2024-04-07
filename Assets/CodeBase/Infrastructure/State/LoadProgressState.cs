@@ -1,7 +1,8 @@
-﻿using CodeBase.Infrastructure.Services.PersistentProgress;
+﻿using CodeBase.Data;
+using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.Services.SaveLoad;
 using CodeBase.Infrastructure.Services.SDK;
-using CodeBase.Infrastructure.States.CodeBase.Services;
 using UnityEngine.Device;
 
 namespace CodeBase.Infrastructure.State

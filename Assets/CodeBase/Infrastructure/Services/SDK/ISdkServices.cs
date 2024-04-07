@@ -2,6 +2,10 @@
 using Agava.YandexGames;
 using System;
 using System.ComponentModel;
+using Agava.YandexGames.Utility;
+using CodeBase.Data;
+using CodeBase.Infrastructure.Services.PersistentProgress;
+using CodeBase.Infrastructure.Services.SaveLoad;
 using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure.Services.SDK
@@ -9,7 +13,6 @@ namespace CodeBase.Infrastructure.Services.SDK
     public interface ISdkServices : IService
     {
         UniTask InitSDK();
-  
     }
 
     public interface ISdkGameReadyServices : ISdkServices
@@ -25,9 +28,9 @@ namespace CodeBase.Infrastructure.Services.SDK
 
     public class YandexSdk : ISdkGameReadyServices, IRawData
     {
-        public async UniTask InitSDK() => 
+        public async UniTask InitSDK() =>
             await YandexGamesSdk.Initialize().ToUniTask();
-        
+
         public async UniTask Save(string jsonData)
         {
             bool isLoaded = false;
@@ -55,5 +58,16 @@ namespace CodeBase.Infrastructure.Services.SDK
 
         public void CallGameReady() =>
             YandexGamesSdk.GameReady();
+    }
+
+    public class EditorRawData : IRawData
+    {
+        private const string ProgressKey = "Progress";
+
+        public async UniTask Save(string jsonData) => 
+            PlayerPrefs.SetString(ProgressKey, jsonData);
+
+        public async UniTask<string> FetchData() => 
+            PlayerPrefs.GetString(ProgressKey);
     }
 }
