@@ -10,6 +10,8 @@ namespace CodeBase.Infrastructure
 
         private void Awake()
         {
+            DontDestroyOnLoad(this);
+            
             _gameStateMachine = new GameStateMachine(new AllServices(), this);
 
             _gameStateMachine.Enter<BootstrapState>();

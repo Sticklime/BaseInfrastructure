@@ -1,12 +1,6 @@
-﻿using System.Threading.Tasks;
-using Agava.YandexGames;
-using System;
-using System.ComponentModel;
-using Agava.YandexGames.Utility;
-using CodeBase.Data;
-using CodeBase.Infrastructure.Services.PersistentProgress;
-using CodeBase.Infrastructure.Services.SaveLoad;
+﻿using Agava.YandexGames.Utility;
 using Cysharp.Threading.Tasks;
+using Agava.YandexGames;
 
 namespace CodeBase.Infrastructure.Services.SDK
 {
